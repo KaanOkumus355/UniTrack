@@ -1,3 +1,60 @@
-h1 {
-  color: blue;
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: linear-gradient( rgb(255, 255, 255) 0%, rgb(244, 215, 161) 100%) fixed;
 }
+.header {
+  padding: 20px;
+  display: flex;
+}
+
+.header img {
+  height: 60px;
+}
+
+.header  h1{
+  font-size: 22px;
+}
+
+.middle-section {
+  padding: 40px;
+  text-align: center;
+}
+
+.middle-section h2{
+  font-size: 60px;
+  font: bold;
+  margin-bottom: 0px;
+}
+
+.middle-section p{
+  font-size: 60px;
+  font: bold;
+}
+
+.middle-section-buttons {
+  display: flex;
+  gap: 50px;
+  margin-top: 20px;
+  justify-content: center;
+}
+
+.middle-section-buttons button {
+  padding: 15px 25px;
+  font-size: 16px;
+  cursor: pointer;
+  background-color: #057152;
+  border: none;
+  border-radius: 20px;
+  color: white;
+  transition: all 0.3s ease;
+}
+
+.middle-section-buttons button:hover {
+  background-color: #045d40;
+}
+
+.middle-section-buttons button:active {
+  transform: scale(0.95);
+}
+
