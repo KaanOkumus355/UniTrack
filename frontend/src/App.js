@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import './App.css';
 import Login from './Login';
+import Register from './Register';
 
 function Header() {
   return (
@@ -11,14 +12,14 @@ function Header() {
   );
 }
 
-function MiddleSection({ onLogin }) {
+function MiddleSection({ onLogin, onRegister }) {
   return (
     <div className="middle-section">
       <h2>Welcome to UniTrack</h2>
       <p>Your ultimate university management system.</p>
       <div className="middle-section-buttons">
         <button className="login-button" onClick={onLogin}>Login</button>
-        <button className="register-button">Register</button>
+        <button className="register-button" onClick={onRegister}>Register</button>
       </div>
     </div>
   );
@@ -33,9 +34,10 @@ function App() {
     <>
       <Header />
 
-      {page === 'home' && <MiddleSection onLogin={() => setPage('login')}/>}
+      {page === 'home' && <MiddleSection onLogin={() => setPage('login')} onRegister={() => setPage('register')}/>}
 
-      {page === 'login' && <Login home={() => setPage('home')}/>}
+      {page === 'login' && <Login onRegister={() => setPage('register')}/>}
+      {page === 'register' && <Register onLogin={() => setPage('login')}/>}
     </>
   );
 }
