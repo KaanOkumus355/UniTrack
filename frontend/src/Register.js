@@ -1,6 +1,6 @@
 import LogRegTemp from "./LogRegTemp";
 
-function Register({onLogin}) {
+function Register({onLogin, onName}) {
   return (
     <LogRegTemp
       title="Create your account"
@@ -10,7 +10,7 @@ function Register({onLogin}) {
         <input type="text" placeholder="✉ Email"/>
         <input type="password" placeholder="🔒︎ Password"/>
         <input type="password" placeholder="🔒︎ Confirm Password"/>
-        <button className="Register-submit-button">Register Now</button>
+        <button className="Register-submit-button" onClick={onName}>Register Now</button>
         </>
       }
       footer={

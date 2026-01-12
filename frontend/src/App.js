@@ -2,6 +2,8 @@ import { useState } from 'react';
 import './App.css';
 import Login from './Login';
 import Register from './Register';
+import Name from './Name';
+import Main from './Main';
 
 function Header() {
   return (
@@ -35,9 +37,11 @@ function App() {
       <Header />
 
       {page === 'home' && <MiddleSection onLogin={() => setPage('login')} onRegister={() => setPage('register')}/>}
-
       {page === 'login' && <Login onRegister={() => setPage('register')}/>}
-      {page === 'register' && <Register onLogin={() => setPage('login')}/>}
+      {page === 'register' && <Register onLogin={() => setPage('login')} onName={() => setPage('name')}/>}
+      {page === 'name' && <Name onMain={() => setPage('main')}/>}
+      {page === 'main' && <Main />}
+
     </>
   );
 }
