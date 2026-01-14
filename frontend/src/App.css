@@ -64,7 +64,7 @@ body {
   align-items: center;
   justify-content: center;
   margin: auto;
-  height: 60vh;
+  height: 65vh;
   border-radius: 30px;
   width: 400px;
   margin-top: 50px;
@@ -103,6 +103,11 @@ body {
   padding-bottom: 24px;
   margin: 0 40px;
   text-align: center;
+}
+
+.loginpage .error-message {
+  color: red;
+  margin-top: 10px;
 }
 
 .loginpage button {

@@ -19,10 +19,9 @@ class User(db.Model):
 with app.app_context():
     db.create_all()
 
-
 @app.route('/register', methods=["POST"])
 def register():
-    data = request.get_json()
+    data = request.get_json() or {}
     username = data.get('username')
     email = data.get('email')
     password = data.get('password')
@@ -56,9 +55,9 @@ def login():
     
     user = User.query.filter_by(email=email).first()
     if user and check_password_hash(user.password_hash, password):
-        return jsonify({'message': 'Login successful!'}), 200
+        return jsonify({'message': 'Login successful!', 'user_id': user.id}), 200
     
     return jsonify({'message': 'Invalid email or password!'}), 401
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', debug=True)
+    app.run(host='0.0.0.0', port=5000, debug=True)
