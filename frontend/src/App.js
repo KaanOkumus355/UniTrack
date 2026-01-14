@@ -3,6 +3,7 @@ import './App.css';
 import Login from './Login';
 import Register from './Register';
 import Main from './Main';
+import AddExam from './AddExam';
 
 function Header() {
   return (
@@ -39,7 +40,8 @@ function App() {
       {page === 'home' && <MiddleSection onLogin={() => setPage('login')} onRegister={() => setPage('register')} setUsername={setUsername}/>}
       {page === 'login' && <Login onRegister={() => setPage('register')} onMain={() => setPage('main')} setUsername={setUsername}/>}
       {page === 'register' && <Register onLogin={() => setPage('login')} onMain={() => setPage('main')} setUsername={setUsername}/>}
-      {page === 'main' && <Main username={username} />}
+      {page === 'main' && <Main username={username} onAddExam={() => setPage('addExam')} />}
+      {page === 'addExam' && <AddExam onMain={() => setPage('main')} />}
 
       </>
   );
