@@ -1,6 +1,6 @@
-function Main() {
+function Main({ username}) {
   return (
-    <h1>Main Page</h1>
+    <h1>Welcome, {username}!</h1>
   );
 }
 

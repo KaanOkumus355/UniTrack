@@ -1,8 +1,8 @@
 import { useState } from "react";
 import LogRegTemp from "./LogRegTemp";
 
-function Register({onLogin, onMain}) {
-  const [Username, setUsername] = useState("");
+function Register({onLogin, onMain, setUsername}) {
+  const [localUsername, setLocalUsername] = useState("");
   const [Email, setEmail] = useState("");
   const [Password, setPassword] = useState("");
   const [message, setMessage] = useState("");
@@ -14,7 +14,7 @@ function Register({onLogin, onMain}) {
       const response = await fetch("http://localhost:5000/register", {
         method: "POST",
         headers: {"Content-Type": "application/json"},
-        body: JSON.stringify({ username: Username, email: Email, password: Password }),
+        body: JSON.stringify({ username: localUsername, email: Email, password: Password }),
       });
 
       const data = await response.json();
@@ -22,6 +22,7 @@ function Register({onLogin, onMain}) {
         setMessage(data.message || "Registration failed");
         return;
       }
+      setUsername(data.username || localUsername);
       setMessage("Registration successful!");
       onMain();
     } catch (error) {
@@ -35,7 +36,7 @@ function Register({onLogin, onMain}) {
       description="Create an account to start tracking your courses and progress."
       child={
         <>
-        <input type="text" placeholder="👤 Name or Username" value={Username} onChange={(e) => setUsername(e.target.value)}/>
+        <input type="text" placeholder="👤 Name or Username" value={localUsername} onChange={(e) => setLocalUsername(e.target.value)}/>
         <input type="text" placeholder="✉ Email" value={Email} onChange={(e) => setEmail(e.target.value)}/>
         <input type="password" placeholder="🔒︎ Password" value={Password} onChange={(e) => setPassword(e.target.value)}/>
         <button className="Register-submit-button" onClick={handleRegister}>Register Now</button>

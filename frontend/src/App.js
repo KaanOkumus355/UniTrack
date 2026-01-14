@@ -30,19 +30,19 @@ function MiddleSection({ onLogin, onRegister }) {
 
 function App() {
   const [page, setPage] = useState('home');
+  const [username, setUsername] = useState("");
 
   return (
     <>
       <Header />
 
-      {page === 'home' && <MiddleSection onLogin={() => setPage('login')} onRegister={() => setPage('register')}/>}
-      {page === 'login' && <Login onRegister={() => setPage('register')} onMain={() => setPage('main')}/>}
-      {page === 'register' && <Register onLogin={() => setPage('login')} onMain={() => setPage('main')}/>}
-      {page === 'main' && <Main />}
+      {page === 'home' && <MiddleSection onLogin={() => setPage('login')} onRegister={() => setPage('register')} setUsername={setUsername}/>}
+      {page === 'login' && <Login onRegister={() => setPage('register')} onMain={() => setPage('main')} setUsername={setUsername}/>}
+      {page === 'register' && <Register onLogin={() => setPage('login')} onMain={() => setPage('main')} setUsername={setUsername}/>}
+      {page === 'main' && <Main username={username} />}
 
-    </>
+      </>
   );
 }
 
 export default App;
-
