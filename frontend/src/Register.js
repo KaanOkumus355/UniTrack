@@ -1,7 +1,7 @@
 import { useState } from "react";
 import LogRegTemp from "./LogRegTemp";
 
-function Register({onLogin, onMain, setUsername}) {
+function Register({onLogin, onMain, setUsername, setUserId}) {
   const [localUsername, setLocalUsername] = useState("");
   const [Email, setEmail] = useState("");
   const [Password, setPassword] = useState("");
@@ -23,6 +23,7 @@ function Register({onLogin, onMain, setUsername}) {
         return;
       }
       setUsername(data.username || localUsername);
+      setUserId(data.user_id);
       setMessage("Registration successful!");
       onMain();
     } catch (error) {

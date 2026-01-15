@@ -1,7 +1,7 @@
 import { useState } from "react";
 import LogRegTemp from "./LogRegTemp";
 
-function Login({onRegister , onMain, setUsername}) {
+function Login({onRegister , onMain, setUsername, setUserId}) {
   const [Email, setEmail] = useState("");
   const [Password, setPassword] = useState("");
   const [message, setMessage] = useState("");
@@ -22,7 +22,8 @@ function Login({onRegister , onMain, setUsername}) {
         return;
       }
       setMessage("Login successful!");
-      setUsername(data.username); 
+      setUsername(data.username);
+      setUserId(data.user_id); 
       onMain();
     } catch (error) {
       setMessage("Cannot connect to server. Try again later.");

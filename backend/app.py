@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 from werkzeug.security import generate_password_hash, check_password_hash
+from datetime import datetime
 
 app = Flask(__name__)
 CORS(app)
@@ -15,6 +16,13 @@ class User(db.Model):
     username = db.Column(db.String(80), nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
     password_hash = db.Column(db.String(200), nullable=False)
+
+class Exam(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    courseName = db.Column(db.String(100), nullable=False)
+    examDate = db.Column(db.Date, nullable=False)
+    examTime = db.Column(db.Time, nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
 with app.app_context():
     db.create_all()
@@ -41,7 +49,7 @@ def register():
     db.session.add(new_user)
     db.session.commit()
 
-    return jsonify({'message': 'Registration successful!'}), 201
+    return jsonify({'message': 'Registration successful!', 'username': new_user.username, 'user_id': new_user.id}), 201
 
 
 @app.route('/login', methods=["POST"])
@@ -58,6 +66,36 @@ def login():
         return jsonify({'message': 'Login successful!', 'username': user.username, 'user_id': user.id}), 200
     
     return jsonify({'message': 'Invalid email or password!'}), 401
+
+@app.route('/Addexam', methods=["POST"])
+def add_exam():
+    data = request.get_json() or {}
+    courseName = data.get('courseName')
+    examDateSTR = data.get('examDate')
+    examTimeSTR = data.get('examTime')
+    user_id = data.get('user_id')
+
+    if not courseName or not examDateSTR or not examTimeSTR or not user_id:
+        return jsonify({'message': 'All fields are required!'}), 400
+
+    examDate = datetime.strptime(examDateSTR, '%Y-%m-%d').date()
+    examTime = datetime.strptime(examTimeSTR, '%H:%M').time()  
+
+    user = User.query.get(user_id)
+    if not user:
+        return jsonify({'message': 'User not found!'}), 404
+
+    new_exam = Exam(
+        courseName=courseName,
+        examDate=examDate,
+        examTime=examTime,
+        user_id=user_id
+    )
+
+    db.session.add(new_exam)
+    db.session.commit()
+
+    return jsonify({'message': 'Exam added successfully!'}), 201
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)

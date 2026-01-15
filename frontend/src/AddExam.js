@@ -1,7 +1,7 @@
 import { useState } from "react";
 import LogRegTemp from "./LogRegTemp";
 
-function AddExam({ onMain }) {
+function AddExam({ onMain, userId }) {
   const [CourseName, setCourseName] = useState("");
   const [ExamDate, setExamDate] = useState("");
   const [ExamTime, setExamTime] = useState("");
@@ -11,10 +11,10 @@ function AddExam({ onMain }) {
     setMessage("");
 
     try {
-      const response = await fetch("http://localhost:5000/addExam", {
+      const response = await fetch("http://localhost:5000/Addexam", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ courseName: CourseName, examDate: ExamDate, examTime: ExamTime }),
+        body: JSON.stringify({ courseName: CourseName, examDate: ExamDate, examTime: ExamTime, user_id: userId }),
       });
       const data = await response.json();
       if (!response.ok) {

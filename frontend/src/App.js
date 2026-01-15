@@ -32,16 +32,17 @@ function MiddleSection({ onLogin, onRegister }) {
 function App() {
   const [page, setPage] = useState('home');
   const [username, setUsername] = useState("");
+  const [userId, setUserId] = useState(null);
 
   return (
     <>
       <Header />
 
       {page === 'home' && <MiddleSection onLogin={() => setPage('login')} onRegister={() => setPage('register')} setUsername={setUsername}/>}
-      {page === 'login' && <Login onRegister={() => setPage('register')} onMain={() => setPage('main')} setUsername={setUsername}/>}
-      {page === 'register' && <Register onLogin={() => setPage('login')} onMain={() => setPage('main')} setUsername={setUsername}/>}
-      {page === 'main' && <Main username={username} onAddExam={() => setPage('addExam')} />}
-      {page === 'addExam' && <AddExam onMain={() => setPage('main')} />}
+      {page === 'login' && <Login onRegister={() => setPage('register')} onMain={() => setPage('main')} setUsername={setUsername} setUserId={setUserId} />}
+      {page === 'register' && <Register onLogin={() => setPage('login')} onMain={() => setPage('main')} setUsername={setUsername} setUserId={setUserId} />}
+      {page === 'main' && <Main username={username} onAddExam={() => setPage('addExam')} userId={userId} />}
+      {page === 'addExam' && <AddExam onMain={() => setPage('main')} userId={userId} />}
 
       </>
   );
