@@ -119,6 +119,31 @@ def next_exam():
         "courseName": exam.courseName
     }), 200
 
+@app.route("/api/upcoming-exams", methods=["GET"])
+def upcoming_exams():
+    user_id = request.args.get("userId", type=int)
+    limit = request.args.get("limit", type=int, default=3)
+
+    if user_id is None:
+        return jsonify({"message": "Missing userId"}), 400
+
+    exams = (
+        Exam.query
+        .filter(Exam.user_id == user_id, Exam.examDate >= date.today())
+        .order_by(Exam.examDate.asc(), Exam.examTime.asc(), Exam.courseName.asc())
+        .limit(limit)
+        .all()
+    )
+
+    return jsonify([
+        {
+            "id": exam.id,
+            "examDate": exam.examDate.isoformat(),
+            "examTime": exam.examTime.strftime("%H:%M"),
+            "courseName": exam.courseName
+        } for exam in exams
+    ]), 200
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)
