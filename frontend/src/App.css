@@ -146,6 +146,7 @@ body {
   color: #ffffff;
   display: flex;
   flex-direction: column;
+
 }
 
 .side_content ul {
@@ -176,4 +177,13 @@ body {
 .side_content ul li.active {
   background: rgba(255, 255, 255, 0.18);
   color: #ffffff;
+}
+
+.main-wrapper {
+  display: flex;
+}
+
+.main-container {
+  flex: 1;
+  padding: 24px;
 }

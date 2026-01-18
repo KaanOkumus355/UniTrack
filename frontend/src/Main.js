@@ -15,14 +15,17 @@ function Sidecontent({ onNavigate, active }) {
 }
 
 
-function Main({ username, userId }) {
+function Main({ username, userId, ExamDate, ExamTime, onAddExam }) {
   const [section, setSection] = useState('Dashboard');
 
   return (
     <>
-      <Sidecontent onNavigate={setSection} active={section} />
-
-      {section === 'Dashboard' && <Dashboard username={username} userId={userId}/>}
+      <div className='main-wrapper'>
+        <Sidecontent onNavigate={setSection} active={section} />
+        <div className='main-container'>
+          {section === 'Dashboard' && <Dashboard username={username} userId={userId} ExamDate={ExamDate} ExamTime={ExamTime} onAddExam={onAddExam} />}
+        </div>
+      </div>
     </>
   );
 }

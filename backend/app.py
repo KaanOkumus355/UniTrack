@@ -2,7 +2,7 @@ from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 from werkzeug.security import generate_password_hash, check_password_hash
-from datetime import datetime
+from datetime import datetime, date
 
 app = Flask(__name__)
 CORS(app)
@@ -96,6 +96,29 @@ def add_exam():
     db.session.commit()
 
     return jsonify({'message': 'Exam added successfully!'}), 201
+
+@app.route("/api/next-exam", methods=["GET"])
+def next_exam():
+    user_id = request.args.get("userId", type=int)
+    if user_id is None:
+        return jsonify({"message": "Missing userId"}), 400
+
+    exam = (
+        Exam.query
+        .filter(Exam.user_id == user_id, Exam.examDate >= date.today())
+        .order_by(Exam.examDate.asc(), Exam.examTime.asc(), Exam.courseName.asc())
+        .first()
+    )
+
+    if not exam:
+        return jsonify({"examDate": None, "examTime": None, "courseName" : None}), 200
+
+    return jsonify({
+        "examDate": exam.examDate.isoformat(),
+        "examTime": exam.examTime.strftime("%H:%M"),
+        "courseName": exam.courseName
+    }), 200
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)
