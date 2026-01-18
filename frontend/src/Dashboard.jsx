@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import NextExams from "./NextExams";
 
 function Dashboard({ username, userId, onAddExam }) {
   const today = new Date();
@@ -53,8 +54,9 @@ function Dashboard({ username, userId, onAddExam }) {
           {daysLeft === 1 ? `Your ${courseName} exam is tomorrow at ${examTime}!` : daysLeft === 0 ? `Your ${courseName} exam is today at ${examTime}!` : daysLeft > 0 ? `${daysLeft} days until your next exam, ${courseName}` : "No upcoming exams"}
         </p>
       </div>
-      <button className="add-exam-button" onClick={onAddExam}>Add Exam</button>
-
+      <div className="dashboard-content">
+        <NextExams userId={userId} onAddExam={onAddExam} />
+      </div>
     </div>
   );
 }
