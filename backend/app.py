@@ -144,6 +144,36 @@ def upcoming_exams():
         } for exam in exams
     ]), 200
 
+@app.route("/api/exams-range", methods=["GET"])
+def exams_range():
+    user_id = request.args.get("userId", type=int)
+    start_date_str = request.args.get("start")
+    end_date_str = request.args.get("end")
+
+    if user_id is None or not start_date_str or not end_date_str:
+        return jsonify({"message": "Missing parameters"}), 400
+
+    try:
+        start_date = datetime.strptime(start_date_str, '%Y-%m-%d').date()
+        end_date = datetime.strptime(end_date_str, '%Y-%m-%d').date()
+    except ValueError:
+        return jsonify({"message": "Invalid date format. Use YYYY-MM-DD."}), 400
+
+    exams = (
+        Exam.query
+        .filter(Exam.user_id == user_id, Exam.examDate >= start_date, Exam.examDate <= end_date)
+        .order_by(Exam.examDate.asc(), Exam.examTime.asc(), Exam.courseName.asc())
+        .all()
+    )
+
+    return jsonify([
+        {
+            "id": exam.id,
+            "examDate": exam.examDate.isoformat(),
+            "examTime": exam.examTime.strftime("%H:%M"),
+            "courseName": exam.courseName
+        } for exam in exams
+    ]), 200
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)
