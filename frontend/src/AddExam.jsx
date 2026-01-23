@@ -35,8 +35,8 @@ function AddExam({ onMain, userId }) {
       child={
         <>
           <input type="text" placeholder="📘 Course Name" value={CourseName} onChange={(e) => setCourseName(e.target.value)} />
-          <input type="date" placeholder="📅 Exam Date" value={ExamDate} onChange={(e) => setExamDate(e.target.value)} />
-          <input type="time" placeholder="⏰ Exam Time" value={ExamTime} onChange={(e) => setExamTime(e.target.value)} />
+          <input type="text" placeholder="📅 Exam Date" onBlur={(e) => (e.target.type = "text")} onFocus={(e) => (e.target.type = "date")} value={ExamDate} onChange={(e) => setExamDate(e.target.value)} />
+          <input type="text" placeholder="⏰ Exam Time" onBlur={(e) => (e.target.type = "text")} onFocus={(e) => (e.target.type = "time")} value={ExamTime} onChange={(e) => setExamTime(e.target.value)} />
           <button className="examtime-submit-button" onClick={handleAddExam}>Add Exam</button>
           {message && <p className="error-message">{message}</p>}
         </>

@@ -43,8 +43,6 @@ function Dashboard({ username, userId, onAddExam }) {
 
   const daysLeft = daysUntilExam(examDate);
 
-
-
   return (
     <div className="dashboard">
       <div className="dashboard-header">
@@ -55,7 +53,9 @@ function Dashboard({ username, userId, onAddExam }) {
         </p>
       </div>
       <div className="dashboard-content">
-        <NextExams userId={userId} onAddExam={onAddExam} />
+        <div className="dashboard-upper-content">
+          <NextExams userId={userId} onAddExam={onAddExam} />
+        </div>
       </div>
     </div>
   );

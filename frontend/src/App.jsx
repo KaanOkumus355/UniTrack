@@ -4,6 +4,7 @@ import Login from './Login';
 import Register from './Register';
 import Main from './Main';
 import AddExam from './AddExam';
+import AddCourse from './AddCourse';
 
 function Header() {
   return (
@@ -41,9 +42,9 @@ function App() {
       {page === 'home' && <MiddleSection onLogin={() => setPage('login')} onRegister={() => setPage('register')} setUsername={setUsername}/>}
       {page === 'login' && <Login onRegister={() => setPage('register')} onMain={() => setPage('main')} setUsername={setUsername} setUserId={setUserId} />}
       {page === 'register' && <Register onLogin={() => setPage('login')} onMain={() => setPage('main')} setUsername={setUsername} setUserId={setUserId} />}
-      {page === 'main' && <Main username={username} onAddExam={() => setPage('addExam')} userId={userId} />}
+      {page === 'main' && <Main username={username} onAddExam={() => setPage('addExam')} onAddCourse={() => setPage('addCourse')} userId={userId} />}
       {page === 'addExam' && <AddExam onMain={() => setPage('main')} userId={userId} />}
-
+      {page === 'addCourse' && <AddCourse onMain={() => setPage('main')} userId={userId} />}
       </>
   );
 }

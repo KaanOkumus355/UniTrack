@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import Dashboard from './Dashboard';
+import Courses from './Courses';
 
 function Sidecontent({ onNavigate, active }) {
   return (
@@ -15,7 +16,7 @@ function Sidecontent({ onNavigate, active }) {
 }
 
 
-function Main({ username, userId, ExamDate, ExamTime, onAddExam }) {
+function Main({ username, userId, ExamDate, ExamTime, onAddExam, onAddCourse }) {
   const [section, setSection] = useState('Dashboard');
 
   return (
@@ -24,6 +25,7 @@ function Main({ username, userId, ExamDate, ExamTime, onAddExam }) {
         <Sidecontent onNavigate={setSection} active={section} />
         <div className='main-container'>
           {section === 'Dashboard' && <Dashboard username={username} userId={userId} ExamDate={ExamDate} ExamTime={ExamTime} onAddExam={onAddExam} />}
+          {section === 'Courses' && <Courses onAddCourse={onAddCourse} />}
         </div>
       </div>
     </>
