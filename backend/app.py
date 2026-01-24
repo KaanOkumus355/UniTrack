@@ -27,10 +27,22 @@ class Exam(db.Model):
 class Courses(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     courseName = db.Column(db.String(100), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    dates = db.relationship("CourseDates", backref="course", cascade="all, delete-orphan")
+    topics = db.relationship("CourseTopic", backref="course", cascade="all, delete-orphan")
+
+class CourseTopic(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    course_id = db.Column(db.Integer, db.ForeignKey("courses.id"), nullable=False, index=True)
+    topic_name = db.Column(db.String(80), nullable=False)
+    topic_des = db.Column(db.Text, nullable=True)
+
+class CourseDates(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    course_id = db.Column(db.Integer, db.ForeignKey("courses.id"), nullable=False, index=True)
     courseDay = db.Column(db.String(20), nullable=False)
     courseStart = db.Column(db.Time, nullable=False)
     courseEnd = db.Column(db.Time, nullable=False)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
 with app.app_context():
     db.create_all()
