@@ -25,8 +25,9 @@ class Exam(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
 class Courses(db.Model):
+    __tablename__ = "courses"
     id = db.Column(db.Integer, primary_key=True)
-    Cname = db.Column(db.String(100), nullable=False)
+    cname = db.Column(db.String(100), nullable=False)
     courseDes = db.Column(db.Text, nullable=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     dates = db.relationship("CourseDates", backref="course", cascade="all, delete-orphan")
@@ -168,11 +169,11 @@ def upcoming_exams():
 @app.route('/Addcourse', methods=["POST"])
 def AddCourse():
     data = request.get_json() or {}
-    Cname = data.get('Cname')
+    cname = data.get('Cname')
     courseDes = data.get('courseDes')
     user_id = data.get('user_id')
 
-    if not Cname or not user_id:
+    if not cname or not user_id:
         return jsonify({'message': 'Course name is required!'}), 400
 
     user = User.query.get(user_id)
@@ -180,7 +181,7 @@ def AddCourse():
         return jsonify({'message': 'User not found!'}), 404
 
     new_course = Courses(
-        Cname = Cname,
+        cname = cname,
         courseDes = courseDes,
         user_id = user_id
     )
@@ -188,10 +189,6 @@ def AddCourse():
     db.session.commit()
 
     return jsonify({'message': 'Course added successfully!'}), 201
-
-
-
-
 
 
 if __name__ == '__main__':

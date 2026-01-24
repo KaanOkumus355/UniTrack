@@ -110,6 +110,14 @@ body {
   margin-top: 10px;
 }
 
+.loginpage textarea {
+  font-size: 0.9rem;
+  padding: 12px;
+  line-height: 1.4;
+  width: 80%;
+  height: 120px;
+}
+
 .loginpage button {
   padding: 10px 20px;
   font-size: 16px;
@@ -335,3 +343,6 @@ body {
   font-size: 12px;
   margin-top: 2px;
 }
+
+
+
