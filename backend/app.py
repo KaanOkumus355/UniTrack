@@ -190,6 +190,53 @@ def AddCourse():
 
     return jsonify({'message': 'Course added successfully!'}), 201
 
+@app.route("/api/courses", methods=["GET"])
+def get_courses():
+    user_id = request.args.get("userId", type=int)
+    if user_id is None:
+        return jsonify({"message": "Missing userId"}), 400
+
+    courses = Courses.query.filter_by(user_id=user_id).order_by(Courses.cname.asc()).all()
+
+    return jsonify([
+        {
+            "id": c.id,
+            "cname": c.cname,
+            "courseDes": c.courseDes
+        } for c in courses
+    ]), 200
+ 
+@app.route("/api/courses/<int:course_id>", methods=["GET"])
+def get_course(course_id):
+    user_id = request.args.get("userId", type=int)
+    if user_id is None:
+        return jsonify({"message": "Missing userId"}), 400
+        
+    course = Courses.query.filter_by(id=course_id, user_id=user_id).first()
+    if not course:
+        return jsonify({"message": "Course not found"}), 404
+
+    return jsonify({
+        "id": course.id,
+        "cname": course.cname,
+        "courseDes": course.courseDes,
+        "dates": [
+            {
+                "id": d.id,
+                "courseDay": d.courseDay,
+                "courseStart": d.courseStart.strftime("%H:%M"),
+                "courseEnd": d.courseEnd.strftime("%H:%M"),
+            } for d in course.dates
+        ],
+        "topics": [
+            {
+                "id": t.id,
+                "topic_name": t.topic_name,
+                "topic_des": t.topic_des
+            } for t in course.topics
+        ]
+    }), 200
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)
